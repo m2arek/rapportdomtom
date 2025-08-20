@@ -1,0 +1,43 @@
+:root { --bg:#0f172a; --card:#111827; --muted:#94a3b8; --accent:#22c55e; --error:#ef4444; }
+* { box-sizing: border-box; }
+body {
+  margin: 0; font-family: system-ui, sans-serif;
+  background: linear-gradient(180deg, #0b1220 0%, #0f172a 100%); color: #e5e7eb;
+  min-height: 100vh; display: grid; place-items: center; padding: 24px;
+}
+.card {
+  width: 100%; max-width: 720px; background: rgba(17,24,39,.7); backdrop-filter: blur(6px);
+  border: 1px solid #1f2937; border-radius: 16px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,.25);
+}
+h1 { margin: 0 0 12px; font-size: 20px; font-weight: 700; }
+p.sub { margin-top: 0; color: var(--muted); font-size: 14px }
+form { display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
+label { display: grid; gap: 6px; font-size: 14px; color: #cbd5e1; }
+input, select {
+  width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid #23304a; background: #0b1220; color: #e5e7eb;
+  font-size: 14px;
+}
+input:focus, select:focus { border-color: #334155; box-shadow: 0 0 0 3px rgba(51,65,85,.35) inset; outline: none; }
+.full { grid-column: 1 / -1; }
+.row { display: flex; gap: 10px; align-items: center; }
+button {
+  padding: 12px 16px; border-radius: 12px; border: 1px solid #164e33;
+  background: linear-gradient(180deg, #22c55e, #16a34a); color: #052e1a; font-weight: 700; cursor: pointer;
+  transition: transform .03s ease, filter .15s ease;
+}
+button:hover { filter: brightness(1.05); }
+button:active { transform: translateY(1px); }
+button[disabled] { opacity: .6; cursor: not-allowed; }
+.result {
+  margin-top: 16px; padding: 14px; border: 1px dashed #334155; border-radius: 12px; background: #0a1220;
+  display: grid; gap: 6px;
+}
+.kpi { font-size: 28px; font-weight: 800; }
+.muted { color: var(--muted); font-size: 13px; }
+.ok { color: var(--accent); }
+.err { color: var(--error); white-space: pre-wrap; }
+.small { font-size: 12px; color: #93a1b3 }
+.grid-3 { display:grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.pill { border:1px solid #24324f; background:#0b1220; border-radius: 10px; padding:8px 10px; font-size:12px; color:#cbd5e1 }
+footer { margin-top: 12px; color: var(--muted); font-size: 12px; }
+@media (max-width: 640px){ form{ grid-template-columns: 1fr } .grid-3{ grid-template-columns: 1fr } }
