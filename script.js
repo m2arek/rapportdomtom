@@ -68,9 +68,11 @@ form.addEventListener('submit', async (e)=>{
   try{
     const t0 = performance.now();
     const { productible, angle, aspect } = await getProductible(lat, lon, orientation, puissance);
+    const prodkwh = Math.round(productible * puissance);
     const dt = performance.now() - t0;
 
     kpi.textContent = `${fmt(productible, 1)} kWh/an`;
+    document.querySelector('#prodkwh').textContent = fmt(prodkwh, 0) + ' kWh';
     meta.innerHTML = `<span class="ok">Succès</span> • ${fmt(dt,0)} ms`;
     coords.textContent = `Lat/Lon: ${fmt(lat,4)} / ${fmt(lon,4)}`;
     tilt.textContent = `Inclinaison: ${angle}°`;
