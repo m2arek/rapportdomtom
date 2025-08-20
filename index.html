@@ -9,7 +9,7 @@
 <body>
   <div class="card">
     <h1>Calcul du productible PV — PVGIS</h1>
-    <p class="sub">Angle fixé à 28° (toiture), puissance crête 1 kWp, pertes 10%, technologie <em>crystSi</em>. Résultat : kWh/kWp/an.</p>
+    <p class="sub">Angle fixé à 28° (toiture), pertes 10%, technologie <em>crystSi</em>. Résultat : kWh/an.</p>
 
     <form id="form">
       <label>
@@ -20,6 +20,11 @@
       <label>
         Longitude
         <input id="lon" type="number" step="0.0001" placeholder="ex. -61.02" required>
+      </label>
+
+      <label class="full">
+        <span>Puissance (kWc)</span>
+        <input id="puissance" type="number" step="0.1" min="0" value="1" required>
       </label>
 
       <label class="full">

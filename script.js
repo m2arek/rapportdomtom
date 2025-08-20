@@ -1,12 +1,12 @@
 const clamp = (v,min,max)=>Math.min(Math.max(v,min),max);
 const fmt = (n,digits=0)=> new Intl.NumberFormat('fr-FR',{maximumFractionDigits:digits,minimumFractionDigits:digits}).format(n);
 
-async function getProductible(lat, lon, orientationDeg){
+async function getProductible(lat, lon, orientationDeg, puissance){
   const angle = 28; // Inclinaison
   const url =
     `https://re.jrc.ec.europa.eu/api/v5_2/PVcalc?outputformat=basic` +
     `&lat=${lat}&lon=${lon}` +
-    `&raddatabase=PVGIS-SARAH2&peakpower=1&loss=10&pvtechchoice=crystSi` +
+    `&raddatabase=PVGIS-SARAH2&peakpower=${puissance}&loss=10&pvtechchoice=crystSi` +
     `&angle=${angle}&aspect=${orientationDeg}&usehorizon=1`;
 
   const proxyUrl = `https://corsproxy.io/?${encodeURIComponent('url')}=${encodeURIComponent(url)}`;
@@ -53,9 +53,10 @@ form.addEventListener('submit', async (e)=>{
   const lat = clamp(parseFloat($('#lat').value), -90, 90);
   const lon = clamp(parseFloat($('#lon').value), -180, 180);
   const orientation = parseFloat($('#orientation').value);
+  const puissance = clamp(parseFloat($('#puissance').value), 0, 1000);
 
-  if (!isFinite(lat) || !isFinite(lon)) {
-    statusEl.textContent = "Latitude/longitude invalides.";
+  if (!isFinite(lat) || !isFinite(lon) || !isFinite(puissance) || puissance <= 0) {
+    statusEl.textContent = "Latitude/longitude/puissance invalides.";
     statusEl.className = "muted small err";
     return;
   }
@@ -66,10 +67,10 @@ form.addEventListener('submit', async (e)=>{
 
   try{
     const t0 = performance.now();
-    const { productible, angle, aspect } = await getProductible(lat, lon, orientation);
+    const { productible, angle, aspect } = await getProductible(lat, lon, orientation, puissance);
     const dt = performance.now() - t0;
 
-    kpi.textContent = `${fmt(productible, 1)} kWh/kWp/an`;
+    kpi.textContent = `${fmt(productible, 1)} kWh/an`;
     meta.innerHTML = `<span class="ok">Succès</span> • ${fmt(dt,0)} ms`;
     coords.textContent = `Lat/Lon: ${fmt(lat,4)} / ${fmt(lon,4)}`;
     tilt.textContent = `Inclinaison: ${angle}°`;
